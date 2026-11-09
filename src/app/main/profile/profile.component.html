@@ -1,0 +1,18 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <!-- Header -->
+    <div class="profile-header">
+      <img src="assets/profile-avatar.jpg" alt="User Avatar" class="avatar" />
+      <div class="user-info">
+        <h2>{{ userName || 'User Name' }}</h2>
+        <p class="email">{{ userEmail || 'user@email.com' }}</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="profile-actions">
+      <button class="btn-outline" (click)="onEditProfile()">Edit Profile</button>
+      <button class="btn-outline" (click)="onChangePassword()">Change Password</button>
+    </div>
+  </div>
+</div>

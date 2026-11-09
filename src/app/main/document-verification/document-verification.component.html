@@ -1,0 +1,114 @@
+<!-- document-verification.component.html -->
+<div class="verification-container">
+  <div class="verification-card">
+    <h2>Document Verification</h2>
+    <p class="subtitle">Review and verify uploaded documents</p>
+    <div class="verifier-badge">
+      <i class="material-icons">verified_user</i>
+      <span>Verifier Access Only</span>
+    </div>
+
+    <!-- Control Section -->
+    <div class="controls-section">
+      <div class="filter-section">
+        <div class="form-group">
+          <label for="statusFilter">Filter by Status</label>
+          <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="fetchDocuments()" class="status-filter">
+            <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <button class="btn-refresh" (click)="refreshDocuments()" [disabled]="isLoading">
+          <i class="material-icons">refresh</i>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Documents Table -->
+    <div class="table-wrapper" *ngIf="documents && documents.length > 0">
+      <table class="verification-table">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Uploaded By</th>
+            <th>Upload Date</th>
+            <th>File Size</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents; trackBy: trackByDocumentId">
+            <td class="document-info">
+              <div class="file-name">{{ doc.fileName }}</div>
+              <small class="document-id">ID: {{ doc.documentId }}</small>
+            </td>
+            <td class="uploader-info">
+              <div class="uploader-email">{{ doc.uploadedBy }}</div>
+            </td>
+            <td class="upload-date">
+              {{ formatDate(doc.uploadDate) }}
+            </td>
+            <td class="file-size">
+              {{ formatFileSize(doc.fileSize) }}
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(doc.status)">
+                {{ doc.status }}
+              </span>
+            </td>
+            <td class="actions-col">
+              <div class="actions">
+                <!-- View Document -->
+                <button class="btn-view" (click)="viewDocument(doc)" title="View Document">
+                  <i class="material-icons">visibility</i>
+                  View
+                </button>
+
+                <!-- Verification Actions (only for pending documents) -->
+                <div class="verification-actions" *ngIf="doc.status === 'Pending Verification'">
+                  <button class="btn-verify" (click)="verifyDocument(doc)" title="Approve Document">
+                    <i class="material-icons">verified</i>
+                    Verify
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Documents Message -->
+    <!-- <div class="no-docs" *ngIf="!isLoading && (!documents || documents.length === 0)">
+      <div class="no-docs-content">
+        <i class="material-icons">description</i>
+        <h3>No documents found</h3>
+        <p>No documents found for the selected status: <strong>{{ selectedStatus }}</strong></p>
+        <button class="btn-refresh" (click)="refreshDocuments()">
+          <i class="material-icons">refresh</i>
+          Refresh
+        </button>
+      </div>
+    </div> -->
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p>Loading documents...</p>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="summary-stats" *ngIf="!isLoading && documents && documents.length > 0">
+      <div class="stats-item">
+        <span class="stats-number">{{ documents.length }}</span>
+        <span class="stats-label">{{ selectedStatus }} Documents</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="dialog-container" @dialogAnim>
+  <h2 mat-dialog-title>
+    <i class="fas fa-exclamation-triangle warning-icon"></i>
+    Confirm Delete
+  </h2>
+  <mat-dialog-content>
+    <p>
+      Are you sure you want to delete <strong>"{{data.title}}"</strong>?<br>
+      This action cannot be undone.
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onCancel()" class="cancel-btn">Cancel</button>
+    <button mat-flat-button color="warn" (click)="onConfirm()" class="delete-btn">Delete</button>
+  </mat-dialog-actions>
+</div>

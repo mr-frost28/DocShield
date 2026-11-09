@@ -1,0 +1,98 @@
+<!-- documents.component.html -->
+<div class="documents-container">
+  <div class="documents-card">
+    <h2>My Documents</h2>
+    <p class="subtitle">Manage, view, and download your uploaded files</p>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading">Loading documents...</div>
+
+    <!-- No documents -->
+    <div *ngIf="!loading && documents.length === 0" class="no-docs">
+      No documents uploaded yet. Start by <a routerLink="/upload">uploading one</a>.
+    </div>
+
+    <!-- Documents Table -->
+    <div class="table-wrapper" *ngIf="!loading && documents.length > 0">
+      <table class="documents-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Size</th>
+            <th>Uploaded On</th>
+            <th>Status</th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents">
+            <td>{{ doc.title }}</td>
+            <td>
+              <div>{{ doc.type }}</div>
+              <small class="content-type" *ngIf="doc.contentType">{{ doc.contentType }}</small>
+            </td>
+            <td>{{doc.size || 'N/A'}}</td>
+            <td>{{ doc.uploadDate | date:'mediumDate' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="{
+                'verified': doc.status === 'Verified',
+                'pending': doc.status === 'Pending Verification'
+              }">
+                {{ doc.status }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn-view" (click)="viewDoc(doc)" title="View document">
+                <i class="fas fa-eye"></i> View
+              </button>
+              <button class="btn-download" (click)="downloadDoc(doc)" title="Download document">
+                <i class="fas fa-download"></i> Download
+              </button>
+              <button class="btn-delete" (click)="deleteDoc(doc)" title="Delete document">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Status message -->
+    <div *ngIf="message" class="status-msg">{{ message }}</div>
+  </div>
+</div>
+
+<!-- File Info Modal -->
+<div class="modal-overlay" *ngIf="showFileInfoModal" (click)="closeFileInfoModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>File Information</h3>
+      <button class="close-btn" (click)="closeFileInfoModal()">&times;</button>
+    </div>
+    <div class="modal-body" *ngIf="selectedFileInfo">
+      <div class="file-info-item">
+        <strong>Name:</strong> {{ selectedFileInfo.filename }}
+      </div>
+      <div class="file-info-item">
+        <strong>Size:</strong> {{ (selectedFileInfo.size) }}
+      </div>
+      <div class="file-info-item">
+        <strong>Type:</strong> {{ selectedFileInfo.contentType }}
+      </div>
+      <div class="file-info-item">
+        <strong>Last Modified:</strong> {{ selectedFileInfo.lastModified | date:'medium' }}
+      </div>
+      <div class="file-info-item">
+        <strong>ETag:</strong> {{ selectedFileInfo.etag }}
+      </div>
+      <div class="file-info-item" *ngIf="selectedFileInfo.metadata && Object.keys(selectedFileInfo.metadata).length > 0">
+        <strong>Metadata:</strong>
+        <pre>{{ selectedFileInfo.metadata | json }}</pre>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-close" (click)="closeFileInfoModal()">Close</button>
+    </div>
+  </div>
+</div>

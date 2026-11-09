@@ -1,0 +1,17 @@
+.home-container {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #e9f3ff);
+  color: #1a1a2e;
+}
+
+/* Footer */
+.footer {
+  width: 100%; /* ensures full width */
+  text-align: center;
+  padding: 20px 0;
+  background: #ffffff; /* match navbar’s white bg */
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05); /* soft top shadow like navbar */
+  color: #555;
+  font-size: 14px;
+}
+

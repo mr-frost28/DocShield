@@ -1,0 +1,107 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-left">
+      <div class="icon-wrapper">
+        <mat-icon>edit</mat-icon>
+      </div>
+      <div>
+        <h2>Edit Profile</h2>
+        <p>Update your personal information</p>
+      </div>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content class="dialog-content">
+    <form [formGroup]="profileForm" class="profile-form">
+      <h3 class="section-title">
+        <mat-icon>person</mat-icon> Personal Details
+      </h3>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="fname" placeholder="First Name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lname" placeholder="Last Name" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" placeholder="your.email@example.com" [disabled]="true" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phone" placeholder="+91 xxxxxxxxxx" />
+      </mat-form-field>
+    </form>
+
+    <form [formGroup]="professionalForm" class="Professional-form">
+      <h3 class="section-title">
+        <mat-icon>work</mat-icon> Professional Details
+      </h3>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Profile Type</mat-label>
+          <mat-select formControlName="profileType" placeholder="Select Profile Type">
+            <mat-option *ngFor="let type of profileTypes" [value]="type.value">
+              {{ type.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Designation / Job Title</mat-label>
+          <input matInput formControlName="Designation" placeholder="Designation / Job Title" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Organization Name</mat-label>
+          <input matInput formControlName="Organization" placeholder="Organization Name" />
+        </mat-form-field>
+      </div>
+    </form>
+
+    <!-- === Academic Details === -->
+    <form [formGroup]="AacademicForm" class="Academic-form">
+      <h3 class="section-title">
+        <mat-icon>school</mat-icon> Academic Details
+      </h3>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Education Level</mat-label>
+          <mat-select formControlName="educationLevel" placeholder="Select Education Level">
+            <mat-option *ngFor="let level of educationLevels" [value]="level.value">
+              {{ level.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row" *ngIf="isEducationLevelSelected()">
+        <mat-form-field appearance="outline">
+          <mat-label>Degree Name</mat-label>
+          <input matInput formControlName="degreeName"
+            placeholder="Enter your degree name (e.g., Computer Science, MBA, etc.)" />
+        </mat-form-field>
+      </div>
+    </form>
+    
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-stroked-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button (click)="onSave()" [disabled]="profileForm.invalid">Save Changes</button>
+  </div>
+</div>

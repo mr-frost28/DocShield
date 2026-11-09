@@ -1,0 +1,35 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Dashboard</h2>
+    <nav>
+      <!-- <a routerLink="/home-page" routerLinkActive="active">Home</a> -->
+      <a routerLink="/my-documents" routerLinkActive="active">My Documents</a>
+      <a routerLink="/upload" routerLinkActive="active">Upload</a>
+      <a routerLink="/documentVerification" routerLinkActive="active" *ngIf="isVerifier()">Document Verification</a>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="dashboard-header">
+      <h1>Welcome, {{ userName }}👋</h1>
+    </header>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Total Documents</h3>
+        <p>{{ totalDocuments }}</p>
+      </div>
+      <div class="card">
+        <h3>Pending Verifications</h3>
+        <p>{{ pendingVerifications }}</p>
+      </div>
+      <div class="card">
+        <h3>Verified Documents</h3>
+        <p>{{ VerifiedDocuments }}</p>
+      </div>
+    </section>
+  </main>
+</div>

@@ -1,0 +1,54 @@
+.home-container {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #e9f3ff);
+  color: #1a1a2e;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 50px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.logo-icon {
+  width: 40px;
+  margin-right: 10px;
+}
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+nav a:hover {
+  color: #007bff;
+
+}
+.logo-link {
+  text-decoration: none;  /* removes underline */
+  color: inherit;         /* keeps the same text color as parent */
+  cursor: pointer;        /* shows pointer on hover */
+}
+
+.logout-link {
+  padding: 6px 12px;
+  border: 1px solid #1a1a2e;  /* dark border */
+  border-radius: 4px;
+  background: transparent;
+  color: #1a1a2e;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logout-link:hover {
+  background: #1a1a2e;
+  color: #fff;
+}

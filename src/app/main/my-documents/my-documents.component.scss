@@ -1,0 +1,279 @@
+.documents-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 85vh;
+  background: linear-gradient(135deg, #f0f4ff, #e9f3ff);
+  font-family: 'Segoe UI', sans-serif;
+  padding: 40px 20px;
+}
+
+.documents-card {
+  background: #fff;
+  padding: 30px;
+  width: 110%;
+  max-width: 1100px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+.documents-card h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a2e;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.loading,
+.no-docs {
+  text-align: center;
+  font-size: 15px;
+  color: #666;
+  padding: 20px 0;
+}
+
+.no-docs a {
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.no-docs a:hover {
+  text-decoration: underline;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.documents-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.documents-table th,
+.documents-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 15px;
+}
+
+.documents-table th {
+  background: #f8faff;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.documents-table tr:hover {
+  background: #f9f9f9;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge.verified {
+  background: #e6f9f0;
+  color: #1e7e34;
+}
+
+.status-badge.pending {
+  background: #fff4e5;
+  color: #b26a00;
+}
+
+.status-badge.rejected {
+  background: #fdecea;
+  color: #b71c1c;
+}
+
+.actions-col {
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.actions button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.actions button i {
+  font-size: 11px;
+}
+
+.btn-view {
+  background: #007bff;
+  color: #fff;
+}
+.btn-view:hover {
+  background: #0056b3;
+}
+
+.btn-download {
+  background: #28a745;
+  color: #fff;
+}
+.btn-download:hover {
+  background: #1e7e34;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #a71d2a;
+}
+
+.status-msg {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #e6e6e6;
+  background: #f8faff;
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #dc3545;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.file-info-item {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.file-info-item strong {
+  color: #1a1a2e;
+  display: inline-block;
+  min-width: 120px;
+}
+
+.file-info-item pre {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: 5px;
+  overflow-x: auto;
+}
+
+.modal-footer {
+  padding: 15px 25px;
+  border-top: 1px solid #e6e6e6;
+  text-align: right;
+  background: #f8faff;
+  border-radius: 0 0 10px 10px;
+}
+
+.btn-close {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-close:hover {
+  background: #545b62;
+}
+
+.content-type {
+  color: #666;
+  font-size: 11px;
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

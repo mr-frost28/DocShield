@@ -1,0 +1,236 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <!-- Step 1: Signup Form -->
+    <div *ngIf="currentStep === 'signup'" class="signup-step">
+      <h2>Create an Account</h2>
+      <p class="subtitle">Join DocShield today and secure your documents</p>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input 
+            id="firstName" 
+            type="text" 
+            formControlName="firstName" 
+            placeholder="Enter your first name"
+            [class.error]="getFieldError('firstName')"
+          />
+          <div class="error-message" *ngIf="getFieldError('firstName')">
+            {{ getFieldError('firstName') }}
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input 
+            id="lastName" 
+            type="text" 
+            formControlName="lastName" 
+            placeholder="Enter your last name"
+            [class.error]="getFieldError('lastName')"
+          />
+          <div class="error-message" *ngIf="getFieldError('lastName')">
+            {{ getFieldError('lastName') }}
+          </div>
+        </div>
+
+        <!-- Email with real-time validation -->
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email" 
+            placeholder="Enter your email address"
+            [class.error]="getFieldError('email')"
+            [class.success]="emailValidation.isValid"
+          />
+          <div class="validation-feedback">
+            <span *ngIf="emailValidation.isChecking" class="checking">
+              <i class="spinner"></i> {{ emailValidation.message }}
+            </span>
+            <span *ngIf="!emailValidation.isChecking && emailValidation.message" 
+                  [class.success]="emailValidation.isValid"
+                  [class.error]="!emailValidation.isValid">
+              {{ emailValidation.message }}
+            </span>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('email')">
+            {{ getFieldError('email') }}
+          </div>
+        </div>
+
+        <!-- Password with strength indicator -->
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <input 
+            id="password" 
+            type="password" 
+            formControlName="password" 
+            placeholder="Create a strong password"
+            [class.error]="getFieldError('password')"
+          />
+          <div class="password-requirements" *ngIf="signupForm.get('password')?.value">
+            <small>Password must contain:</small>
+            <ul class="requirement-list">
+              <li [class.met]="hasUpperCase(signupForm.get('password')?.value)">
+                <i class="icon" [class.check]="hasUpperCase(signupForm.get('password')?.value)" 
+                   [class.cross]="!hasUpperCase(signupForm.get('password')?.value)"></i>
+                At least one uppercase letter
+              </li>
+              <li [class.met]="hasLowerCase(signupForm.get('password')?.value)">
+                <i class="icon" [class.check]="hasLowerCase(signupForm.get('password')?.value)"
+                   [class.cross]="!hasLowerCase(signupForm.get('password')?.value)"></i>
+                At least one lowercase letter
+              </li>
+              <li [class.met]="hasNumber(signupForm.get('password')?.value)">
+                <i class="icon" [class.check]="hasNumber(signupForm.get('password')?.value)"
+                   [class.cross]="!hasNumber(signupForm.get('password')?.value)"></i>
+                At least one number
+              </li>
+              <li [class.met]="hasSpecialChar(signupForm.get('password')?.value)">
+                <i class="icon" [class.check]="hasSpecialChar(signupForm.get('password')?.value)"
+                   [class.cross]="!hasSpecialChar(signupForm.get('password')?.value)"></i>
+                At least one special character
+              </li>
+              <li [class.met]="hasMinLength(signupForm.get('password')?.value)">
+                <i class="icon" [class.check]="hasMinLength(signupForm.get('password')?.value)"
+                   [class.cross]="!hasMinLength(signupForm.get('password')?.value)"></i>
+                At least 8 characters long
+              </li>
+            </ul>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('password')">
+            {{ getFieldError('password') }}
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password *</label>
+          <input 
+            id="confirmPassword" 
+            type="password" 
+            formControlName="confirmPassword" 
+            placeholder="Re-enter your password"
+            [class.error]="getFieldError('confirmPassword')"
+            [class.success]="passwordsMatch()"
+          />
+          <div class="error-message" *ngIf="getFieldError('confirmPassword')">
+            {{ getFieldError('confirmPassword') }}
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="!canProceedToVerification"
+          [class.loading]="isSigningUp">
+          <span *ngIf="isSigningUp" class="spinner"></span>
+          {{ isSigningUp ? 'Creating Account...' : 'Create Account' }}
+        </button>
+      </form>
+
+      <p class="switch-auth">
+        Already have an account? <a routerLink="/login">Sign In</a>
+      </p>
+    </div>
+
+    <!-- Step 2: Email Verification -->
+    <div *ngIf="currentStep === 'verification'" class="verification-step">
+      <div class="verification-icon">
+        <i class="email-icon">📧</i>
+      </div>
+      
+      <h2>Verify Your Email</h2>
+      <p class="subtitle">
+        We've sent a 6-digit verification code to<br>
+        <strong>{{ signupEmail }}</strong>
+      </p>
+
+      <form [formGroup]="verificationForm" (ngSubmit)="onVerifyEmail()">
+        <div class="form-group">
+          <label for="verificationCode">Verification Code</label>
+          <input 
+            id="verificationCode" 
+            type="text" 
+            formControlName="verificationCode" 
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            class="verification-input"
+            [class.error]="getFieldError('verificationCode', verificationForm)"
+          />
+          <div class="error-message" *ngIf="getFieldError('verificationCode', verificationForm)">
+            {{ getFieldError('verificationCode', verificationForm) }}
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="!canVerifyEmail"
+          [class.loading]="isVerifying">
+          <span *ngIf="isVerifying" class="spinner"></span>
+          {{ isVerifying ? 'Verifying...' : 'Verify Email' }}
+        </button>
+      </form>
+
+      <div class="verification-help">
+        <p>Didn't receive the code?</p>
+        <button 
+          type="button" 
+          class="btn-link" 
+          (click)="onResendVerificationCode()"
+          [disabled]="isResendingCode">
+          {{ isResendingCode ? 'Sending...' : 'Resend Code' }}
+        </button>
+      </div>
+
+      <p class="switch-auth">
+        Want to use a different email? <a href="#" (click)="currentStep = 'signup'; $event.preventDefault()">Go Back</a>
+      </p>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div *ngIf="currentStep === 'complete'" class="success-step">
+      <div class="success-icon">
+        <i class="check-icon">✅</i>
+      </div>
+      
+      <h2>Account Created Successfully!</h2>
+      <p class="subtitle">
+        Your email has been verified and your account is ready to use.<br>
+        You can now sign in and start uploading your documents.
+      </p>
+
+      <button type="button" class="btn-primary" (click)="onGoToLogin()">
+        Continue to Sign In
+      </button>
+
+      <div class="success-features">
+        <h3>What's next?</h3>
+        <ul class="feature-list">
+          <li>
+            <i class="icon">📁</i>
+            Upload and organize your documents securely
+          </li>
+          <li>
+            <i class="icon">🔐</i>
+            Enjoy bank-level security for your files
+          </li>
+          <li>
+            <i class="icon">✅</i>
+            Get your documents verified by our trusted verifiers
+          </li>
+          <li>
+            <i class="icon">📱</i>
+            Access your documents from anywhere, anytime
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

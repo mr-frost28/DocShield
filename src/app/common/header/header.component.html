@@ -1,0 +1,30 @@
+<div class="home-container">
+  <header class="navbar">
+    <div class="logo">
+      <img src="assets/newlogo.jpg" alt="DocShield Logo" class="logo-icon" />
+      <span class="logo-text">
+        <a routerLink="/home-page" class="logo-link">DocShield</a>
+      </span>
+    </div>
+
+    <nav>
+      <!-- Show different links depending on login -->
+      <ng-container *ngIf="!auth.isLoggedIn(); else loggedInLinks">
+        <a routerLink="/signup">Sign Up</a>
+        <a routerLink="/login">Log In</a>
+      </ng-container>
+
+      <ng-template #loggedInLinks>
+        <!-- <a routerLink="/profile">{{ auth.getUser() || 'Profile' }}</a> -->
+        <span class="ml-auto mr-3" style="display: inline-flex; align-items: center; gap: 4px;">
+          <i class="fas fa-user"></i>
+          {{ auth.getUserEmail() }}
+          <span *ngIf="auth.isVerifier()" style="text-transform: capitalize;">
+            - {{ auth.getUserRole() || 'user' }}
+          </span>
+        </span>
+        <a (click)="onLogout()" class="logout-link">Logout</a>
+      </ng-template>
+    </nav>
+  </header>
+</div>

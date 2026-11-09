@@ -1,0 +1,40 @@
+<!-- upload.component.html -->
+<div class="upload-container">
+  <div class="upload-card">
+    <h2>Upload Document</h2>
+    <p class="subtitle">Securely store your important files in DocShield</p>
+
+    <form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
+      <!-- Document Title -->
+      <div class="form-group">
+        <label>Document Title</label>
+        <input type="text" formControlName="title" placeholder="e.g. B.Tech Certificate" />
+      </div>
+
+      <!-- Document Type -->
+      <div class="form-group">
+        <label>Document Type</label>
+        <select formControlName="type">
+          <option value="">Select Type</option>
+          <option *ngFor="let t of documentTypes" [value]="t">{{t}}</option>
+        </select>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label>Select File</label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+
+      <!-- Upload Button -->
+      <button type="submit" class="btn-primary" [disabled]="uploadForm.invalid || !selectedFile || isUploading">
+        {{ isUploading ? 'Uploading...' : 'Upload Document' }}
+      </button>
+    </form>
+
+    <!-- Status Message -->
+    <div *ngIf="message" [ngClass]="{'success-message': success, 'error-message': !success}" class="status-message">
+      {{ message }}
+    </div>
+  </div>
+</div>

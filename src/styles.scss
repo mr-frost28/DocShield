@@ -1,0 +1,28 @@
+/* ===== Global Imports ===== */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'ngx-toastr/toastr';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* ===== Global Dialog Styles ===== */
+.custom-dialog-container {
+  .mat-mdc-dialog-container {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+    background: white !important;
+  }
+  
+  .mat-mdc-dialog-surface {
+    border-radius: 12px !important;
+  }
+}
+
+/* Dialog backdrop */
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Ensure proper z-index for dialogs */
+.cdk-overlay-container {
+  z-index: 1000 !important;
+}

@@ -1,0 +1,69 @@
+.learn-more-container {
+  padding: 3rem;
+  max-width: 1100px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero .highlight {
+  color: #0056d2;
+  font-weight: bold;
+}
+
+.features .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.card {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.how-it-works ol {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+}
+.how-it-works li {
+  margin-bottom: 0.8rem;
+}
+
+.cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+.btn-primary, .btn-secondary {
+  margin: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: #0056d2;
+  color: #fff;
+}
+.btn-secondary {
+  background-color: #eee;
+  color: #0056d2;
+}
+
+.auth-container {
+  background: linear-gradient(135deg, #f0f4ff, #e9f3ff);
+  font-family: 'Segoe UI', sans-serif;
+}
